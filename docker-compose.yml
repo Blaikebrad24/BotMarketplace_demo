@@ -1,0 +1,61 @@
+
+services:
+
+  # Postgres database
+  postgres:
+    image: postgres:15-alpine
+    container_name: bot-marketplace-db 
+    environment: 
+      POSTGRES_DB: ${DB_NAME:-bot_marketplace}
+      POSTGRES_USER: ${DB_USER:-bot_marketplaceUser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # postgres_data maps to the directory postgres saves data
+      - ./database/init:/docker-entrypoint-initdb.d  # entry point when docker starts up container, auto runs sql commands
+    networks:
+      - bot-marketplace-network 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-bot_marketplaceUser}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  
+  # Redis configuration for caching
+  redis:
+     image: redis:7-alpine 
+     container_name: bot-marketplace-redis
+     ports: 
+      - "6379:6379"
+     volumes: 
+      - redis_data:/data 
+     networks:
+      - bot-marketplace-network 
+     healthcheck:
+        test: ["CMD", "redis-cli", "ping"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+  
+  # pgAdmin Database management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: bot-marketplace-pgadmin
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: admin@example.com 
+      PGADMIN_DEFAULT_PASSWORD: admin 
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres 
+    networks:
+      - bot-marketplace-network 
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks: 
+  bot-marketplace-network:
+    driver: bridge
