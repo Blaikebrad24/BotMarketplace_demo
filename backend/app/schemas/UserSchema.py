@@ -1,7 +1,7 @@
 # File: app/schemas/user.py
 from typing import Optional
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
-from app.schemas.base import TimestampSchema
+from app.schemas.BaseSchema import TimestampSchema
 
 """
 User Schemas for different use cases:

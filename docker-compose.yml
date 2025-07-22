@@ -12,8 +12,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data # postgres_data maps to the directory postgres saves data
-      - ./database/init:/docker-entrypoint-initdb.d  # entry point when docker starts up container, auto runs sql commands
+      - postgres_data:/var/lib/postgresql/data # any data created in the data directory within the Postgres db will be mapped to the volume name postgres_data in Docker
+      - ./database/init:/docker-entrypoint-initdb.d  # /docker-entrypoint-initdb.d directory will execute .sh/.sql files alphabetically in this directory
     networks:
       - bot-marketplace-network 
     healthcheck:

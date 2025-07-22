@@ -42,8 +42,7 @@ class Settings(BaseSettings):
     DESCRIPTION: str = "API for the Bot Marketplace application"
     
     # Database settings 
-    DATABASE_URL: str = Field(..., env="DATABASE_URL")
-    
+    DATABASE_URL: str = Field(default="postgresql://postgres:postgres@localhost:5432/bot_marketplace",env="DATABASE_URL")    
     # Database connection pool settings
     DB_POOL_SIZE: int = Field(default=5, env="DB_POOL_SIZE")
     DB_MAX_OVERFLOW: int = Field(default=10, env="DB_MAX_OVERFLOW")
@@ -54,10 +53,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(default=30, env="ACCESS_TOKEN_EXPIRE_MINUTES")
     
     # CORS Settings (Cross-Origin Resource Sharing)
-    ALLOWED_HOSTS: List[str] = Field(
-        default=["http://localhost:3000", "http://localhost:8000"], 
-        env="ALLOWED_HOSTS"
-    )
+    ALLOWED_HOSTS: List[str] = Field(default=["http://localhost:3000", "http://localhost:8000"], env="ALLOWED_HOSTS")
     
     # Environment
     ENVIRONMENT: str = Field(default="development", env="ENVIRONMENT")

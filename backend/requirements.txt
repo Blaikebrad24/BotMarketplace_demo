@@ -1,17 +1,16 @@
-# FastAPI and ASGI server
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 
-# Database - using correct psycopg version
+# Database - using only psycopg2-binary (which installed successfully)
 sqlalchemy==2.0.23
 alembic==1.13.1
-asyncpg==0.29.0
 psycopg2-binary==2.9.10
+# Skip asyncpg for now - it's not compatible with Python 3.13
 
-# Data validation
-pydantic==2.5.0
-pydantic-settings==2.1.0
-email-validator==2.1.0
+# Data validation - use newer versions compatible with Python 3.13
+pydantic>=2.8.0
+pydantic-settings>=2.4.0
+email-validator>=2.2.0
 
 # Authentication and security
 python-jose[cryptography]==3.3.0
@@ -24,6 +23,5 @@ python-decouple==3.8
 python-dotenv==1.0.0
 
 # Development dependencies
-pytest==7.4.3
-pytest-asyncio==0.21.1
-httpx==0.25.2
+pytest>=8.0.0
+httpx>=0.25.2
