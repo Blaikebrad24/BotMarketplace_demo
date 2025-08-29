@@ -69,13 +69,7 @@ class CRUDUser(CRUDBase[UserModel, UserCreate, UserUpdate]):
         
         return db_obj
     
-    def authenticate(
-        self, 
-        db: Session, 
-        *, 
-        username: str, 
-        password: str
-    ) -> Optional[UserModel]:
+    def authenticate(self, db: Session, *,  username: str, password: str) -> Optional[UserModel]:
         """
         Authenticate user with username/email and password.
         

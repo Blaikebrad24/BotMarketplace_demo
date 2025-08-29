@@ -13,10 +13,7 @@ Bot marketplace endpoints.
 router = APIRouter()
 
 @router.get("/", response_model=List[BotResponse])
-def read_bots(
-    db: Session = Depends(get_db),
-    skip: int = Query(0, ge=0, description="Number of items to skip"),
-    limit: int = Query(100, ge=1, le=100, description="Number of items to return"),
+def read_bots(db: Session = Depends(get_db),skip: int = Query(0, ge=0, description="Number of items to skip"),limit: int = Query(100, ge=1, le=100, description="Number of items to return"),
     category: str = Query(None, description="Filter by category ID"),
     search: str = Query(None, description="Search query"),
     free_only: bool = Query(False, description="Show only free bots"),
@@ -47,11 +44,7 @@ def read_bots(
     return bots
 
 @router.get("/{bot_id}", response_model=BotResponse)
-def read_bot(
-    *,
-    db: Session = Depends(get_db),
-    bot_id: str,
-) -> Any:
+def read_bot(*,db: Session = Depends(get_db),bot_id: str,) -> Any:
     """
     Get bot by ID.
     

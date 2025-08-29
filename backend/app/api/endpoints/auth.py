@@ -81,6 +81,11 @@ def login(db: Session = Depends(get_db),form_data: OAuth2PasswordRequestForm = D
             status_code=status.HTTP_400_BAD_REQUEST, 
             detail="Inactive user"
         )
+    elif not user_crud.is_verified(user):
+        raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST, 
+        detail="Email not verified"
+    )
     
     # Create access token
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
